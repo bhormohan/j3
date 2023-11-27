@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: j3
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      type: j3
+  template:
+    metadata:
+      name: pod1
+      labels:
+        type: j3
+    spec:
+      containers:
+        - name: mycontainer
+          image: mohan16032001/j3
+          ports:
+            - name: j3
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: j3-service
+spec:
+  selector:
+    type: j3
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
